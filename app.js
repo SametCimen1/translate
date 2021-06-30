@@ -17,26 +17,54 @@ if(wordInput.value !== ""){
         const content = document.querySelector(".content");
         content.textContent = "";
         
-        var example = document.createElement("span")
-        example.textContent = " example "
-        example.style.color = "black"
-
+      
         content.innerHTML += "<h1>Meanings</h1>"
+        let isThere = false;
         for(let i = 0; i<jsonResponse[0].meanings.length; i++){
+            if(typeof jsonResponse[0].meanings[i].definitions[0].definition !== 'undefined'){
             const definition = document.createElement("h2");
             definition.textContent += jsonResponse[0].meanings[i].definitions[0].definition; 
             content.append(definition)
+            isThere = true;
+            }
         }
-        content.innerHTML += "<h1>Examples</h1>"
-        for(let i = 0; i<jsonResponse[0].meanings.length; i++){
+        if(!isThere){
             const definition = document.createElement("h2");
-            definition.textContent += jsonResponse[0].meanings[i].definitions[0].example;
+            definition.textContent += "No Meaning Avaible";
             content.append(definition)
         }
-        content.innerHTML += "<h1>Part Of Speach</h1>"
+
+        content.innerHTML += "<h1>Examples</h1>"
+         isThere = false;
         for(let i = 0; i<jsonResponse[0].meanings.length; i++){
+            if(typeof jsonResponse[0].meanings[i].definitions[0].example !== 'undefined'){
             const definition = document.createElement("h2");
-            definition.textContent += jsonResponse[0].meanings[i].partOfSpeech;
+            definition.textContent += jsonResponse[0].meanings[i].definitions[0].example;
+            content.append(definition)    
+            isThere = true;
+            }
+        }
+        if(!isThere){
+            const definition = document.createElement("h2");
+            definition.textContent += "No example Avaible";
+            content.append(definition)
+        }
+
+    
+        content.innerHTML += "<h1>Part Of Speach</h1>"
+        isThere = false;
+        for(let i = 0; i<jsonResponse[0].meanings.length; i++){
+            
+            if(typeof jsonResponse[0].meanings[i].partOfSpeech !== 'undefined'){
+                const definition = document.createElement("h2");
+                definition.textContent += jsonResponse[0].meanings[i].partOfSpeech;
+                content.append(definition) 
+                isThere = true;
+            }
+        }
+        if(!isThere){
+            const definition = document.createElement("h2");
+            definition.textContent += "No Part Of Speach Avaible";
             content.append(definition)
         }
         for(let i = 1; i<jsonResponse.length; i++){
